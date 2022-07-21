@@ -8,6 +8,7 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { CreateSessionDto } from './dto/createSession.dto';
 import { SessionService } from './session.service';
@@ -18,9 +19,11 @@ export class SessionController {
   constructor(private readonly sessionService: SessionService) {}
 
   @Post()
+  @ApiTags('session')
+  @ApiOperation({ summary: 'Login' })
   async createSession(
     @Res({ passthrough: true }) response: Response,
-    @Body('user') createSessionDto: CreateSessionDto,
+    @Body() createSessionDto: CreateSessionDto,
     @Ip() ip: string,
   ): Promise<SessionType> {
     const data = await this.sessionService.createSession(createSessionDto, ip);
@@ -30,6 +33,8 @@ export class SessionController {
   }
 
   @Patch()
+  @ApiTags('session')
+  @ApiOperation({ summary: 'Refresh tokens' })
   async updateSession(
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response,
@@ -43,6 +48,8 @@ export class SessionController {
   }
 
   @Delete()
+  @ApiTags('session')
+  @ApiOperation({ summary: 'Log out' })
   async deleteSession(@Req() request: Request) {
     await this.sessionService.deleteSession(request.cookies.refreshToken);
   }

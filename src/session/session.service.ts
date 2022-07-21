@@ -41,6 +41,13 @@ export class SessionService {
       },
     );
 
+    if (!user) {
+      throw new HttpException(
+        'Credentials are not valid',
+        HttpStatus.UNPROCESSABLE_ENTITY,
+      );
+    }
+
     if (!user.isActived) {
       throw new HttpException('User not activated', HttpStatus.FORBIDDEN);
     }
