@@ -8,6 +8,8 @@ import ormconfig from './ormconfig';
 import { ConfigModule } from '@nestjs/config';
 import { SessionModule } from './session/session.module';
 import { AuthMiddleware } from './user/middlewares/auth.middleware';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 const bullOptions = {
   redis: {
@@ -21,6 +23,14 @@ const bullOptions = {
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot(ormconfig),
     BullModule.forRoot(bullOptions),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'static'),
+      serveRoot: '/static/',
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client', 'build'),
+      exclude: ['/api*'],
+    }),
     UserModule,
     SessionModule,
   ],
