@@ -95,7 +95,6 @@ export class SessionService {
   }
 
   async updateSession(refreshToken: string): Promise<SessionType> {
-    console.log(refreshToken);
     const session = await this.sessionRepository.findOne(
       { refreshToken },
       { relations: ['user'] },
@@ -120,8 +119,12 @@ export class SessionService {
       id: user.id,
     };
     return {
-      accessToken: sign(payload, process.env.ACCESS_SECRET),
-      refreshToken: sign(payload, process.env.REFRESH_SECRET),
+      accessToken: sign(payload, process.env.ACCESS_SECRET, {
+        expiresIn: process.env.ACCESS_TIME,
+      }),
+      refreshToken: sign(payload, process.env.REFRESH_SECRET, {
+        expiresIn: process.env.REFRESH_TIME,
+      }),
     };
   }
 

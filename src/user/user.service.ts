@@ -166,7 +166,7 @@ export class UserService {
     };
 
     return sign(payload, process.env.RESET_PASSWORD_SECRET, {
-      expiresIn: '1h',
+      expiresIn: process.env.RESET_PASSWORD_TIME,
     });
   }
 

@@ -42,7 +42,10 @@ export class SessionController {
     const data = await this.sessionService.updateSession(
       request.cookies.refreshToken,
     );
-    response.cookie('refreshToken', data.refreshToken);
+    response.cookie('refreshToken', data.refreshToken, {
+      httpOnly: true,
+      expires: new Date(Date.now() + process.env.REFRESH_TIME_IN_MS),
+    });
 
     return data;
   }

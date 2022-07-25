@@ -10,19 +10,18 @@ import { SessionModule } from './session/session.module';
 import { AuthMiddleware } from './user/middlewares/auth.middleware';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-
-const bullOptions = {
-  redis: {
-    host: 'localhost',
-    port: 6379,
-  },
-};
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forRoot(ormconfig),
-    BullModule.forRoot(bullOptions),
+    BullModule.forRoot({
+      redis: {
+        host: process.env.REDIS_HOST,
+        port: Number(process.env.REDIS_PORT),
+      },
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'static'),
       serveRoot: '/static/',
@@ -30,6 +29,10 @@ const bullOptions = {
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client', 'build'),
       exclude: ['/api*'],
+    }),
+    ThrottlerModule.forRoot({
+      ttl: Number(process.env.TTL),
+      limit: Number(process.env.LIMIT),
     }),
     UserModule,
     SessionModule,
