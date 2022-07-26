@@ -45,6 +45,9 @@ export class UserEntity {
   @Column({ type: 'uuid' })
   activationLink: string;
 
+  @Column()
+  agree: boolean;
+
   @BeforeUpdate()
   updateTimestamp() {
     this.updatedAt = new Date();

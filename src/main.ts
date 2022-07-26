@@ -24,6 +24,9 @@ async function bootstrap() {
 
   SwaggerModule.setup('api', app, document);
 
+  app.enableCors({
+    origin: 'http://localhost:3001',
+  });
   app.use(cookieParser());
 
   await app.listen(process.env.SERVER_PORT);

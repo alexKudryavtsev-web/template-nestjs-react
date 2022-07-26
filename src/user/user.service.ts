@@ -132,6 +132,7 @@ export class UserService {
           'createdAt',
           'updatedAt',
           'activationLink',
+          'agree',
         ],
       },
     );

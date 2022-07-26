@@ -37,6 +37,7 @@ export class SessionService {
           'createdAt',
           'updatedAt',
           'activationLink',
+          'agree',
         ],
       },
     );
