@@ -21,6 +21,7 @@ import parseErrorMessageToText from '../utils/parseErrorObjectToText';
 
 function CreateAccountPage() {
   const [message, setMessage] = useState('');
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -38,7 +39,7 @@ function CreateAccountPage() {
           data.lastName,
           data.password,
           data.gender,
-          data.agree
+          data.agree,
         );
 
         setMessage(res.request.statusText);

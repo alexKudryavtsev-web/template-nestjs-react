@@ -18,7 +18,7 @@ const PUBLIC_ROUTES = [
   { path: 'login', element: <LoginPage /> },
   { path: 'create-account', element: <CreateAccountPage /> },
   { path: 'forgot-password', element: <ForgotPasswordPage /> },
-  { path: 'set-new-password/:link', element: <SetNewPasswordPage /> },
+  { path: 'update-password/:token', element: <SetNewPasswordPage /> },
   ...COMMON_ROUTES,
 ];
 

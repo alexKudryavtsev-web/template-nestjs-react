@@ -23,8 +23,19 @@ class AuthService {
   static async login(email, password) {
     return $api.post(`session`, { email, password });
   }
+
   static async logout() {
     return $api.delete('session');
+  }
+
+  static async resetPassword(email) {
+    return axios.post(`${API_URL}/user/reset-password`, { email });
+  }
+
+  static async setNewPassword(password, token) {
+    return axios.patch(`${API_URL}/user/update-password/${token}`, {
+      password,
+    });
   }
 }
 

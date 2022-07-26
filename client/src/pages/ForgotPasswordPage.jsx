@@ -1,15 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import { Box, Button, FormControl, Input, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Center,
+  FormControl,
+  Input,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
 import CenterOnPage from '../components/ui/CenterOnPage';
+import AuthService from '../services/AuthService';
+import parseErrorMessageToText from '../utils/parseErrorObjectToText';
 
 function LoginPage() {
+  const [message, setMessage] = useState('');
+
   const formik = useFormik({
     initialValues: {
       email: '',
     },
-    onSubmit(data) {
-      console.log(data);
+    async onSubmit(data) {
+      try {
+        const res = await AuthService.resetPassword(data.email);
+
+        setMessage(res.request.statusText);
+      } catch (error) {
+        setMessage(parseErrorMessageToText(error.response.data.message));
+      }
     },
   });
   return (
@@ -31,6 +49,9 @@ function LoginPage() {
               reset password
             </Button>
           </VStack>
+          <Center width="full">
+            <Text>{message}</Text>
+          </Center>
         </form>
       </Box>
     </CenterOnPage>

@@ -63,7 +63,6 @@ export class UserController {
   }
 
   @Post('/reset-password')
-  @UseGuards(AuthGuard)
   @ApiTags('user')
   @ApiOperation({ summary: 'Reset password' })
   @ApiBearerAuth()
