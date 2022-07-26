@@ -1,5 +1,5 @@
 import axios from 'axios';
-import $api from '../http';
+import $api, { API_URL } from '../http';
 
 class AuthService {
   static async registration(
@@ -10,7 +10,7 @@ class AuthService {
     gender,
     agree,
   ) {
-    return axios.post('http://localhost:3000/api/user', {
+    return axios.post(`${API_URL}/user`, {
       email,
       firstName,
       lastName,
@@ -21,10 +21,10 @@ class AuthService {
   }
 
   static async login(email, password) {
-    return $api.post('session/login', { email, password });
+    return $api.post(`session`, { email, password });
   }
   static async logout() {
-    return $api.post('session/logout');
+    return $api.delete('session');
   }
 }
 

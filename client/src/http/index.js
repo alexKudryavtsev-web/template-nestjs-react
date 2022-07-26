@@ -27,6 +27,7 @@ $api.interceptors.response.use(
           withCredentials: true,
         });
         localStorage.setItem('token', response.data.accessToken);
+        localStorage.setItem('user', response.data.user);
         return $api.request(originalRequest);
       } catch (e) {
         console.log(e);

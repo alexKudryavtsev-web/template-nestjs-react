@@ -10,8 +10,13 @@ import {
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../logo/Logo';
+import { getIsAuth } from '../../store/selectors';
+import { useSelector } from 'react-redux';
+import { store } from "../../store"
+import { logout } from '../../store/reducers/userReducer';
 
-function Header({ isAuth = false, ...props }) {
+function Header({ ...props }) {
+  const isAuth = useSelector(getIsAuth);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
 
@@ -25,6 +30,7 @@ function Header({ isAuth = false, ...props }) {
 
   async function logoutBtnHandler() {
     try {
+      store.dispatch(logout())
       navigate('/');
     } catch (e) {}
   }

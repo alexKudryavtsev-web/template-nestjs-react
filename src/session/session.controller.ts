@@ -53,7 +53,11 @@ export class SessionController {
   @Delete()
   @ApiTags('session')
   @ApiOperation({ summary: 'Log out' })
-  async deleteSession(@Req() request: Request) {
+  async deleteSession(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     await this.sessionService.deleteSession(request.cookies.refreshToken);
+    response.clearCookie('refreshToken');
   }
 }

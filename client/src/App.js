@@ -4,19 +4,22 @@ import { BrowserRouter, useRoutes } from 'react-router-dom';
 import Header from './components/header/Header';
 import { PRIVATE_ROUTES, PUBLIC_ROUTES } from './routes/routes';
 import { store } from './store';
+import { getIsAuth } from './store/selectors';
+import { useSelector } from 'react-redux';
 
-function AppRoutes({ isAuth }) {
+function AppRoutes() {
+  const isAuth = useSelector(getIsAuth);
+
   return useRoutes(isAuth ? PRIVATE_ROUTES : PUBLIC_ROUTES);
 }
 
 function App() {
-  const isAuth = false;
   return (
     <BrowserRouter>
       <Provider store={store}>
         <ChakraProvider>
-          <Header isAuth={isAuth} />
-          <AppRoutes isAuth={isAuth} />
+          <Header/>
+          <AppRoutes />
         </ChakraProvider>
       </Provider>
     </BrowserRouter>

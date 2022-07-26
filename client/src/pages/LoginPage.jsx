@@ -12,6 +12,8 @@ import {
 import CenterOnPage from '../components/ui/CenterOnPage';
 import PasswordInput from '../components/ui/PasswordInput';
 import { Link as NavLink } from 'react-router-dom';
+import { store } from '../store';
+import { login } from '../store/reducers/userReducer';
 
 function LoginPage() {
   const formik = useFormik({
@@ -20,9 +22,10 @@ function LoginPage() {
       password: '',
     },
     onSubmit(data) {
-      console.log(data);
+      store.dispatch(login({ ...data }));
     },
   });
+
   return (
     <CenterOnPage>
       <Box bg="white" p={6} rounded="md">
