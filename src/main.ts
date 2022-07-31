@@ -24,6 +24,7 @@ async function bootstrap() {
     .setVersion('1.0')
     .addTag('session')
     .addTag('user')
+    .addTag('avatar')
     .addBearerAuth()
     .build();
 
