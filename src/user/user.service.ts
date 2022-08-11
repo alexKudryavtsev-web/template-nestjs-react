@@ -25,7 +25,7 @@ export class UserService {
     private readonly sessionRepository: Repository<SessionEntity>,
   ) {}
 
-  async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
+  async createUser(createUserDto: CreateUserDto): Promise<void> {
     const candidate = await this.userRepository.findOne({
       email: createUserDto.email,
     });
@@ -51,22 +51,7 @@ export class UserService {
       link: `${process.env.API_URL}/user/activate/${user.activationLink}`,
     });
 
-    return await this.userRepository.save(user);
-  }
-
-  async updateUser(
-    updateUserDto: UpdateUserDto,
-    currentUserId: number,
-  ): Promise<UserEntity> {
-    const user = await this.userRepository.findOne(currentUserId);
-
-    if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    }
-
-    Object.assign(user, updateUserDto);
-
-    return await this.userRepository.save(user);
+    await this.userRepository.save(user);
   }
 
   async deleteUser(currentUserId: number): Promise<void> {
@@ -83,7 +68,7 @@ export class UserService {
       throw new HttpException('Wrong link', HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
-    user.isActived = true;
+    user.isActivated = true;
 
     await this.userRepository.save(user);
   }
@@ -106,7 +91,7 @@ export class UserService {
   async updatePassword(
     updatePasswordDto: UpdatePasswordDto,
     token: string,
-  ): Promise<UserEntity> {
+  ): Promise<void> {
     const dataFromToken: any = this.verifyResetPasswordToken(token);
 
     if (!dataFromToken) {
@@ -128,7 +113,7 @@ export class UserService {
           'lastName',
           'gender',
           'password',
-          'isActived',
+          'isActivated',
           'createdAt',
           'updatedAt',
           'activationLink',
@@ -147,7 +132,7 @@ export class UserService {
 
     user.password = await hash(updatePasswordDto.password, HASH_ROUNDS);
 
-    return await this.userRepository.save(user);
+    await this.userRepository.save(user);
   }
 
   async readById(id: number): Promise<UserEntity> {

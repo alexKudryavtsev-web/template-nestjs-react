@@ -12,6 +12,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { AvatarModule } from './avatar/avatar.module';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { AvatarModule } from './avatar/avatar.module';
     UserModule,
     SessionModule,
     AvatarModule,
+    ProfileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

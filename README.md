@@ -1,5 +1,15 @@
 # Minimum template for full-stack development with NestJS and React.
 
+What is in the template?
+
+- Authorization by JWT
+- Integration with Cloudinary
+- Swagger docs
+- Configured queue and orm
+- Static service
+- Pretty emails
+- ...
+
 Install project:
 
 - ` git clone https://github.com/alexKudryavtsev-web/template-nestjs-react.git`
@@ -40,6 +50,7 @@ DB_NAME=
 ACCESS_TIME=15m
 ACCESS_SECRET=
 REFRESH_TIME=30d
+REFRESH_TIME_IN_MS=2592000000
 REFRESH_SECRET=
 RESET_PASSWORD_TIME=1h
 RESET_PASSWORD_SECRET=
@@ -49,4 +60,8 @@ REDIS_PORT=6379
 
 TTL=60
 LIMIT=10
+
+CLOUDINARY_NAME=
+CLOUDINARY_KEY=
+CLOUDINARY_SECRET=
 ```

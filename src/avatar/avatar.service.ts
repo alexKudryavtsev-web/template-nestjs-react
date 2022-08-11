@@ -13,7 +13,7 @@ export class AvatarService {
     });
   }
 
-  async uploadFile(
+  async uploadAvatar(
     currentUserId: number,
     file: Express.Multer.File,
   ): Promise<void> {
@@ -36,7 +36,7 @@ export class AvatarService {
     streamifier.createReadStream(file.buffer).pipe(stream);
   }
 
-  async getFile(userId: number): Promise<string | null> {
+  async getAvatar(userId: number): Promise<string | null> {
     return cloudinary.search
       .expression(String(userId))
       .execute()

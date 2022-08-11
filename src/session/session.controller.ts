@@ -8,9 +8,10 @@ import {
   Req,
   Res,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { CreateSessionDto } from './dto/createSession.dto';
+import { SessionResponseDto } from './dto/sessionResponse.dto';
 import { SessionService } from './session.service';
 import { SessionType } from './types/session.type';
 
@@ -21,6 +22,7 @@ export class SessionController {
   @Post()
   @ApiTags('session')
   @ApiOperation({ summary: 'Login' })
+  @ApiOkResponse({ type: SessionResponseDto })
   async createSession(
     @Res({ passthrough: true }) response: Response,
     @Body() createSessionDto: CreateSessionDto,
@@ -42,9 +44,10 @@ export class SessionController {
     const data = await this.sessionService.updateSession(
       request.cookies.refreshToken,
     );
+
     response.cookie('refreshToken', data.refreshToken, {
       httpOnly: true,
-      expires: new Date(Date.now() + process.env.REFRESH_TIME_IN_MS),
+      maxAge: Number(process.env.REFRESH_TIME_IN_MS),
     });
 
     return data;

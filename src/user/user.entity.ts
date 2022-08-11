@@ -31,7 +31,13 @@ export class UserEntity {
   lastName: string;
 
   @Column({ type: 'boolean', default: false })
-  isActived: boolean;
+  isActivated: boolean;
+
+  @Column({ default: '' })
+  bio: string;
+
+  @Column({ default: '' })
+  address: string;
 
   @Column({ type: 'enum', enum: GenderEnum, default: GenderEnum.OTHER })
   gender: string;
